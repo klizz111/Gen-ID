@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gen-ID</title>
+</head>
+<body>
+    <h1>Generate Check Digit for ID Number</h1>
+    <div>
+        <label for="id_number">Enter the first 17 digits of the ID number:</label>
+        <input type="text" id="id_number" maxlength="17" pattern="\d{17}" />
+        <button onclick="alert('Check Digit: ' + caculate_check_digit(document.getElementById('id_number').value))">Calculate Check Digit</button>
+    </div>
+</body>
+
+<script>
+    function caculate_check_digit(id_number) {
+        const weights = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+        const check_code_map = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+
+        digits = id_number.slice(0, 17).split('').map(Number);
+
+        let total = 0;
+        for (let i = 0; i < digits.length; i++) {
+            total += digits[i] * weights[i];
+        }
+
+        const check_digit = check_code_map[total % 11];
+        return check_digit;
+    }
+</script>
+</html>
